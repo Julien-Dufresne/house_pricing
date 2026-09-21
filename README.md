@@ -1,7 +1,7 @@
 # house_pricing
 
 ## Objectives:
-AS part of my Data Science and ML studies, we had as a task to practice our skills by participating to a Kaggle competition, where developers and data scientists from all the words can practice by participating to several competitions. 
+As part of my Data Science and ML studies, we had as a task to practice our skills by participating to a Kaggle competition, where developers and data scientists from all the words can practice by participating to several competitions. 
 
 The goal of the competition we entered, (House Prices - Advanced Regression Techniques) was to build a Machine Learning model that would learn from a data set containing different informations about houses that have been sold and the price they have been sold, and use this model to predict prices of other houses when given just their related information. 
 
@@ -29,5 +29,14 @@ After reviewing the data, we could observe about the database:
     > Using Ordinal Encoder using preselected ordinal categories' names
     > Using OneHotEncoder for the rest of the nominal categorical data
 
+## Baseline model and Pipeline building
 
-    
+- Creating of a baseline model and evaluating it with Cross Validation to see the ability of this model to generalize
+
+- Building the Pipeline that would include several ML models:
+      > RandomForestRegressor
+      > GradientBoostingRegressor
+      > Support Vector Regression
+
+## Fitting and evaluating
+- Fitting the model and evaluating using cross_val_score
