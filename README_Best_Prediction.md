@@ -1,27 +1,57 @@
 # Trying a new model: Catboost
-CatBoost is a gradient boosting machine-learning algorithm based on decision trees. It is especially useful for tabular data and is particularly good when your dataset contains categorical features.
-We will skip the Data Review part as it was already done in the Initial Prediction Readme Document. 
+CatBoost is a gradient boosting Machine Learning algorithm based on decision trees. It is especially useful for tabular data and performs particularly well when a dataset contains categorical features.
 
-## Data Pre-processing
-- Splitting the dataset into a data section and a target section
-- Splitting the data into a train set (80%) and a test set (20%) so we could train the model on 80% of the dataset, and later on checking the accuracy of this model using the test set that the model would not have seen yet.
-- As the houses price variation was very high, we had to scale the target data
-- Review manually which categorical data was ordinal or not
+We will skip the Data Review section, as this was already covered in the initial prediction README document.
 
-## Pre processing, scaler and Pipelines
-- Identifying text-category columns (no need to one-hot encode with CatBoost
-- Adding MSSubClass to the categorical column list
-- Filling NAs to train and test data
+## Preprocessing and Categorical Features
+
+One of the advantages of CatBoost is its ability to handle categorical features directly, without requiring OneHotEncoder.
+
+The following preprocessing steps were performed:
+
+- Identifying the categorical (object) columns.
+- Adding MSSubClass to the list of categorical features.
+- Filling missing (NaN) values in both the training and test datasets.
+- No scaling or One-Hot Encoding was required for the categorical features, as CatBoost can process them directly.
+
 
 ## Creating the Catboost Regression model
-- Creating the model
-- Running Cross_validation:
-    > Mean CatBoost CV log-RMSE: 0.1254 (individual error scores:
-         > 0.1179, 0.1416, 0.1470, 0.1143, 0.1059
+- Creating a CatBoostRegressor model.
+
+- Evaluating the model using Cross-Validation.
+
+Cross-Validation Results
+
+- Mean CatBoost CV log-RMSE: 0.1254
+
+- Individual fold scores:
+    - 0.1179
+    - 0.1416
+    - 0.1470
+    - 0.1143
+    - 0.1059
+
+The Cross-Validation results showed an improvement compared with our previous Stacking model, which achieved a mean CV log-RMSE of 0.1311.
 
 ## Fitting the model and predicting prices of test data
 
-Ending up with place number 528 with a best score of 0.12259
+After evaluating the model with Cross-Validation:
+
+- The CatBoost model was fitted to the training data.
+- The fitted model was used to predict SalePrice for the Kaggle test dataset.
+- The log-transformed predictions were converted back to the original house-price scale.
+- The predictions were formatted and submitted to Kaggle.
+
+## Kaggle Results
+
+The CatBoost submission achieved:
+
+- Kaggle Score: 0.12259
+- Leaderboard Position: 528
+
+This was an improvement over our previous submission score of 0.12950, showing that CatBoost performed better on this dataset than our initial Stacking model.
+
+
 <img width="1145" height="119" alt="Screenshot 2026-09-22 at 10 12 53" src="https://github.com/user-attachments/assets/d7a5fb6a-ce49-436a-888a-121b287e4948" />
 
   
