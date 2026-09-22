@@ -1,54 +1,102 @@
 # house_pricing
 
 ## Objectives:
-As part of my Data Science and ML studies, we had as a task to practice our skills by participating to a Kaggle competition, where developers and data scientists from all the words can practice by participating to several competitions. 
+As part of my Data Science and Machine Learning studies, we were given the task of practicing our skills by participating in a Kaggle competition, where developers and data scientists from around the world can practice their skills by taking part in various competitions.
 
-The goal of the competition we entered, (House Prices - Advanced Regression Techniques) was to build a Machine Learning model that would learn from a data set containing different informations about houses that have been sold and the price they have been sold, and use this model to predict prices of other houses when given just their related information. 
+The goal of the competition we entered, House Prices - Advanced Regression Techniques, was to build a Machine Learning model that could learn from a dataset containing different information about houses that had been sold, including their sale prices.
+
+The model would then use this information to predict the prices of other houses based on their characteristics.
 
 ## Data Review
-After reviewing the data, we could observe about the database: 
-- For each house, we had 80 different parameters, composed of both categories (object) and numerical data (integer and floats).
-- The target (SalePrice) was in an integer format
-- Some values were null
-- The dataset included 1460 entries (houses)
+After reviewing the dataset, we made the following observations:
+- For each house, we had 80 different features, composed of both categorical (object) and numerical data (int and float).
+- The target variable (SalePrice) was stored as an integer.
+- Some values were missing (NaN).
+- The dataset included 1,460 entries (houses).
 
 ## Data Preprocessing
-- Splitting the dataset into a data section and a target section
-- Splitting the data into a train set (80%) and a test set (20%) so we could train the model on 80% of the dataset, and later on checking the accuracy of this model using the test set that the model would not have seen yet.
-- As the houses price variation was very high, we had to scale the target data
-- Review manually which categorical data was ordinal or not
+- Splitting the dataset into:
+    - Features (X)
+    - Target (y)
+- Splitting the data into:
+- Training set: 80%
+- Test set: 20%
+
+This allowed us to train the model on 80% of the dataset and later evaluate its performance using the remaining 20%, which the model had not seen during training.
+
+As house prices had a large variation and a skewed distribution, we applied a log transformation to the target (SalePrice).
+
+Manually reviewing the categorical features to determine which ones were ordinal and which ones were nominal.
 
 ### Creation of the pipeline
-- Splitting the data set into three categories:
-    > Numerical Data
-    > Categorical Ordinal Data
-    > Categorical Nominal Data
-- Creating a preprocessor for each categories:
-    > Using SimpleImputer to compute data where NA was present
-    > Scaling numerical Data
-    > Using Ordinal Encoder using preselected ordinal categories' names
-    > Using OneHotEncoder for the rest of the nominal categorical data
+The dataset was divided into three categories:
+
+- Numerical Data
+-  Categorical Data
+- Nominal Categorical Data
+
+A specific preprocessing approach was created for each category:
+
+- Numerical Data
+    - SimpleImputer to handle missing (NaN) values
+    - Scaling of numerical features
+
+- Ordinal Categorical Data
+    - SimpleImputer to handle missing values
+    - OrdinalEncoder using predefined ordinal category orders
+
+- Nominal Categorical Data
+    - SimpleImputer to handle missing values
+    - OneHotEncoder for nominal categorical features
+
+These preprocessing steps were combined into a single preprocessor.
 
 ## Baseline model and Pipeline building
+A baseline model was first created and evaluated using Cross-Validation to estimate the model's ability to generalize to unseen data.
 
-- Creating of a baseline model and evaluating it with Cross Validation to see the ability of this model to generalize
+A Stacking Regressor was then created by combining several Machine Learning models:
 
-- Building the Pipeline that would stack several ML models:
-      > RandomForestRegressor
-      > GradientBoostingRegressor
-      > Support Vector Regression
+- RandomForestRegressor
+- GradientBoostingRegressor
+- SVR (Support Vector Regression)
+
+The preprocessing steps and the Stacking Regressor were then combined into a complete Machine Learning pipeline.
 
 ## Fitting and evaluating
-- Fitting the model and evaluating using cross_val_score:
-  > Stacking CV log-RMSE: 0.1311
-  > Standard deviation: 0.0208
+The model was evaluated using cross_val_score.
+Results:
+
+    - Stacking CV log-RMSE: 0.1311
+    - Standard deviation:   0.0208
   
+The Root Mean Squared Error (RMSE) was used as the main evaluation metric.
+A lower RMSE indicates better predictions.
 
 ## Creating Predictions using the pipeline and modifying those predictions to scale them
-- Checking which model contributed the most to the prediction:
-    > Random Forest        0.125593
-    > Gradient Boosting    0.705594
-    > SVR                  0.180033
+Creating Predictions
+
+After training the pipeline, predictions were generated for the unseen data.
+
+Since the target variable had been log-transformed before training, the predictions were transformed back to the original house-price scale before creating the final submission.
+
+We also checked the contribution of each model to the final stacked prediction:
+Model                                                Coefficient
+
+Random Forest                                        0.125593
+
+Gradient Boosting                                    0.705594
+
+SVR                                                  0.18003
+
+The Gradient Boosting model had the largest coefficient in the final estimator, indicating that it had the strongest influence on the final predictions.
 
 ## Sending those initial predictions through the Housing Competitions:
-Root-Mean-Squared-Error: 0.12950
+Kaggle Submission
+
+Finally, the predictions were submitted to the House Prices - Advanced Regression Techniques Kaggle competition.
+
+The initial submission achieved:
+
+- Root Mean Squared Error: 0.12950
+
+The Kaggle score was slightly better than our average Cross-Validation score of 0.1311, showing that the model performed similarly on completely unseen competition data.
