@@ -1,4 +1,4 @@
-# house_pricing
+# house_pricing_predictions
 
 ## Objectives:
 As part of my Data Science and Machine Learning studies, we were given the task of practicing our skills by participating in a Kaggle competition, where developers and data scientists from around the world can practice their skills by taking part in various competitions.
